@@ -5,7 +5,7 @@
     version     = "1.0"
     versionCode = "100" >
     <!-- versionCode is optional and Android only -->
-    <preference name="phonegap-version" value="5.2.0" />
+    <preference name="phonegap-version" value="cli-5.2.0" />
 
     <name>Treps</name>
     <description>An entrepreneurs lookup tool on social networks</description>
