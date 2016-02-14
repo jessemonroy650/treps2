@@ -1,0 +1,25 @@
+* {margin:0;padding:0;}
+* {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;} /* Thanks, Paul */
+body {margin:0;padding:0;font-family: Helvetica, Arial, sans-serif;font-size:medium;}
+img {border:0;margin:0;padding:0;}
+a {text-decoration:none;} /* font-weight:bold;color:black; */
+p.spacer {margin:0.5em;}
+
+#header {
+	font-size:large;
+}
+/* The foot-spacer class is needed because the "position:fixed" attribute
+acts like a float, in that elements around it do NOT make room for it. */
+#footer, .footer-spacer {
+	height:3em;
+	font-size:small;
+	position:fixed; bottom:0;
+	width: 100%;
+}
+#copyright {font-size:small;padding:0 0.2em;}
+
+.boxy {border:solid black 1px;padding:0.1em;}
+
+.collapse {visibility:collapse;display:none;}
+.hidden  {visibility:hidden;display:none;}
+.visible {visibility:visible;diplay:block;}

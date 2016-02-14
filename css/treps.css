@@ -1,0 +1,12 @@
+* {font-size:medium;}
+#appIcon {height:50px; width:50px;align:baseline;}
+#menuIcon {float:right;margin:0;}
+
+#myhandle {width:85%;margin:0.2em 1em;padding:0.2em;}
+#wrapper_lookup {width:85%;margin:1em;padding:0.2em;}
+#output {width:85%;margin:1em;padding:0.2em;}
+#treps {width:85%;margin:1em;padding:0.2em;background-color:#cccccc;}
+#hiddenButtons {margin:0 5%;}
+
+.menuItem {text-align:center;font-size:large;border:1px solid black;padding:0.2em;margin:0;}
+
