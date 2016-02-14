@@ -25,7 +25,7 @@ var buttons = {
                 otherInfo['contact'] = contact;
                 //console.log(JSON.stringify(data));
                 if (data.photos) {
-                    outstring += '<img src=' + data.photos[0].url + '><br>';
+                    outstring += '<img class=trepsImage src=' + data.photos[0].url + '><br>';
                     otherInfo['photo'] = data.photos[0].url;
                 }
                 if (data.contactInfo) {
@@ -52,15 +52,26 @@ var buttons = {
         $('#getTrep').click( function () {
             console.log('#getTrep');
             firebase.getList(firebase.myTrepsRef, 'name', function (data) {
+                console.log(JSON.stringify(data, null, 4));
+                //return;
                 var theList = "";
                 var xyz     = "";
                 for (i = 0; i < data.length; i++) {
-                    xyz = "c:" + data[i];
-                    console.log(xyz);
+                    xyz  = "";
+                    if (data[i].otherInfo['photo']) {
+                        xyz += '<img class=trepsImage src=' + data[i].otherInfo['photo'] + '><br>';
+                    }
+                    xyz += "c:" + data[i].contact + "<br>";
+                    if (data[i].otherInfo['fullName']) {
+                        xyz += "fn:" + data[i].otherInfo['fullName'] + "<br>";
+                    }
+                    xyz += "<hr>";
+                    //console.log(xyz);
                     theList += xyz + "\n";
                 }
                 //
-                $('#treps').html('<pre>' + theList + '</pre>');
+                //$('#treps').html('<pre>' + theList + '</pre>');
+                $('#treps').html(theList);
             });                
         });
         //

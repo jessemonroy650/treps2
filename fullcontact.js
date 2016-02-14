@@ -55,11 +55,6 @@ var fullcontact = {
                 fullcontact.status.message = "We don't know what happened.";
             }
             callback(fullcontact.status, data);
-        }).fail(function() {
-            //alert(contact + " failed");
-            fullcontact.status.code    = 201;
-            fullcontact.status.message = "Server connection failed." 
-            callback(fullcontact.status, null);
         });
     }
 };

@@ -29,7 +29,7 @@ var app = {
             document.getElementById('exitApp').classList.add("hidden");
         }
         buttons.init();
-        fullcontact.init(twitterURL, emailURL, fullContactKey);
+        fullcontact.init(twitterURL, emailURL, phoneURL, fullContactKey);
         firebase.init(userInfoURL, trepsInfoURL, app.currentUser);
         setTimeout(function () {
             if (app.userEmail === "") {

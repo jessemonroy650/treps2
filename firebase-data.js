@@ -22,8 +22,10 @@ var firebase = {
         ref.orderByKey().once("value", function (data) {
             var d = data.val();
             var x = "";
+            // Strip off the "push" key and return a linear array
             for (x in d) {
-                storage.push(d[x].contact)
+                //console.log(d[x]);
+                storage.push(d[x])
             }
             callback(storage);
         });
