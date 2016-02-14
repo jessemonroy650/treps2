@@ -85,7 +85,7 @@ var fullContactKey = '9ca495c39270a54d';
 // Wait for PhoneGap to load
 document.addEventListener("deviceready", app.onDeviceReady, false);
 
-var device = {'platform':'browser'};
-var drTimeout = 2000;
+//var device = {'platform':'browser'};
+//var drTimeout = 2000;
 
-setTimeout(app.onDeviceReady, drTimeout);
+//setTimeout(app.onDeviceReady, drTimeout);
