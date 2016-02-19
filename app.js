@@ -7,6 +7,7 @@ var app = {
     //
     onDeviceReady : function () {
         //alert("device ready.");
+        console.log("device ready.");
         if (device.platform === "iOS") {
             alert("got iOS.");
             // hide Exit button. They don't have one on iOS devices.
@@ -22,15 +23,28 @@ var app = {
             }, false);
             // Trap the button click to exit the app
             document.getElementById('exitApp').addEventListener('click', function() {
-                app.exit();
+                navigator.app.exitApp();
             });
         } else if (device.platform == 'browser') {
             // hide Exit button. They don't need it for the browser.
             document.getElementById('exitApp').classList.add("hidden");
         }
+        if (device.platform != 'browser') {
+            app.phonegapStuff();
+        }
+        // Setup the buttons
         buttons.init();
+        // This is in the popup message
+        //document.getElementById('timeouttime').innerHTML = popup.timeout/1000;
+        // set the popup button
+        //popup.init();
+        popup.init({'timeout':'0'});
+        // 
+        popup.fire({'message':'<p>&nbsp;<p>Fetching user data.','color':'green'});
+        // initalize our network parameters and connections
         fullcontact.init(twitterURL, emailURL, phoneURL, fullContactKey);
-        firebase.init(userInfoURL, trepsInfoURL, app.currentUser);
+        firebase.init(userInfoURL, trepsInfoURL, initUserData);
+        // Initialize the account, if not setup.
         setTimeout(function () {
             if (app.userEmail === "") {
                 firebase.setUser({'realname':'Jesse Monroy',
@@ -49,7 +63,7 @@ var app = {
         app.userEmail = info.email;
         app.displayInfo('#realname', info.realname);
         app.displayInfo('#email', info.email);
-        app.displayInfo('#twitterhandle', info.twitterhandle);        
+        app.displayInfo('#twitterhandle', info.twitterhandle);  
     },
     //
     displayInfo : function (name, value) {
@@ -63,17 +77,27 @@ var app = {
     shortMessage : function (message) {
         $('#image').html(message);
     },
-    //
-    exit : function () {
-        console.log('Called app.exit()');
-        if ('app' in navigator) {
-            navigator.app.exitApp();
-        } else {
-            alert('exit button hit.');
-        }
+    phonegapStuff : function () {
+        // Requires the 'device' plugin
+        return;
+        // A bug in Phonegap does not allow us to use the `id=cordova`
+        document.getElementById('acordova').innerHTML = device.cordova;
+        document.getElementById('model').innerHTML = device.model;
+        document.getElementById('platform').innerHTML = device.platform;
+        document.getElementById('uuid').innerHTML = device.uuid;
+        document.getElementById('version').innerHTML = device.version;
     }
 };
+
+function initUserData(data) {
+    popup.extingish({'message':'<p>&nbsp;<p>Got it.','color':'black'}, 2000);
+    app.currentUser(data);
+};
+
+
+//
 // Firebase DB Connections.
+//
 var userInfoURL    = 'https://treps.firebaseio.com/user/user-info';
 var trepsInfoURL   = 'https://treps.firebaseio.com/user/treps-list';
 // Fullcontact API (base) calls.
@@ -82,10 +106,26 @@ var emailURL       = 'https://api.fullcontact.com/v2/person.json?email=';
 var phoneURL       = 'https://api.fullcontact.com/v2/person.json?phone=+';
 var fullContactKey = '9ca495c39270a54d';
 //
-// Wait for PhoneGap to load
-document.addEventListener("deviceready", app.onDeviceReady, false);
+var drTimeout = 2000;
 
-//var device = {'platform':'browser'};
-//var drTimeout = 2000;
+//
+//    Entry Point
+//
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if we are using a webbrowser.
+    var v = navigator.appVersion.match('X11');
+    //
+    // This is truthy, not absolute.
+    if ( v == 'X11' ) {
+        //document.getElementById('isbrowser').innerHTML = v;
+        // This needs to be global so other modules can see it.
+        device = {platform:'browser'};
+        // Force the function.
+        app.onDeviceReady();
+    } else {
+        //document.getElementById('isbrowser').innerHTML = 'not X11';
+        // Wait for PhoneGap to load
+        document.addEventListener("deviceready", app.onDeviceReady, false);
+    }
+});
 
-//setTimeout(app.onDeviceReady, drTimeout);

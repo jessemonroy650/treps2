@@ -18,12 +18,16 @@
     <img id=appIcon  src=images/fullcontact-stacked-solid-white.png>&nbsp;Treps
     <img id=menuIcon src=images/3menubars_lightgrey.png>
 </div>
+
+<div id=popup class=popup>This is a popup message goes away after <span id=timeouttime></span> seconds.</div>
+
 <div id=hiddenButtons class=hidden>
     <div id=deviceInformation>Device Info</div>
     <div id=slabel>storage available: <span id=storeavailable>content</span></div>
     <button id=getDeviceInfo  class="button glow button-action" >Device Info</button>
     <button id=getContactInfo class="button glow button-action" >Contact Info</button>
     <button id=exitApp        class="button glow button-primary">Exit</button>
+    <button id=toggle         class="hidden button glow button-action" >toggle the popup</button>
 </div>
 <div id=menu class=hidden>
     <div id=a class=menuItem>a</div>
@@ -52,6 +56,8 @@
 <div id="footer" class="footer">
     <span id=copyright class=copyright>Copyright 2016 by Jesse Monroy, Jr.</span>
 </div>
+    <link rel='stylesheet' type='text/css' href='popup/popup.css'>
+    <script type="text/javascript" charset="utf-8" src='popup/popup.js'></script>
 
     <script type="text/javascript" charset="utf-8" src="js/firebase-2.2.1.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/zepto-1.1.6.js"></script>

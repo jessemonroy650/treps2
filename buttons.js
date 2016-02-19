@@ -18,7 +18,8 @@ var buttons = {
         //
         $('#lookupbutton').click( function () {
             var contact = $('#lookup').val();
-            //console.log(c);
+            if (contact === "") {return;}
+            // console.log(contact); return;
             fullcontact.get(contact, function (status, data) {
                 var outstring = '';
                 var otherInfo = {};
@@ -51,8 +52,11 @@ var buttons = {
         //
         $('#getTrep').click( function () {
             console.log('#getTrep');
+            // Let user know what is going on.
+            popup.fire({'message':'<p>&nbsp;<p>Getting your Treps.','color':'green'});            
             firebase.getList(firebase.myTrepsRef, 'name', function (data) {
-                console.log(JSON.stringify(data, null, 4));
+                popup.extingish({'message':'<p>&nbsp;<p>Got it.','color':'black'}, 2000);
+                //console.log(JSON.stringify(data, null, 4));
                 //return;
                 var theList = "";
                 var xyz     = "";

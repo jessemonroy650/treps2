@@ -1,0 +1,18 @@
+.popup {
+  text-align:center;
+  height:200px;
+  width:280px;
+  padding:0.2em;
+  background-color:#eeeeee; /* not quite white */
+  border:1px black solid;
+  border-radius: 0.5em;
+  /* position related */
+  position:absolute;
+  left:10px;
+  top:50px;
+  /* fade in and out */
+  opacity: 0;
+  /* WITHOUT THIS THE BUTTON UNDERNEATH IS BLOCKED */
+  visibility: collapse;
+  transition: opacity 0.5s ease;
+}
