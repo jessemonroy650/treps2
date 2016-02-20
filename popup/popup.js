@@ -5,6 +5,7 @@ var popup = {
     visible     : 0,    // This indicate the pop is not visible.
     timeout     : 7000,
     id          : 'popup',
+    theText     : 'message', // This is where we put the text
     button      : 'toggle',
     once        : 1,
     minShowTime : 0,
@@ -67,7 +68,8 @@ var popup = {
                 }
             }, popup.minShowTime);
         }
-        document.getElementById(popup.id).innerHTML = obj.message;
+        console.log(popup.text);
+        document.getElementById(popup.theText).innerHTML = obj.message;
     },
     fire : function (obj) {
         console.log('fire:', JSON.stringify(obj));
