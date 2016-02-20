@@ -40,7 +40,7 @@ var app = {
         //popup.init();
         popup.init({'timeout':'0'});
         // 
-        popup.fire({'message':'<p>&nbsp;<p>Fetching user data.','color':'green'});
+        popup.fire({'message':'<p>&nbsp;<p>Fetching user data.','color':'green','minShowTime':2000});
         // initalize our network parameters and connections
         fullcontact.init(twitterURL, emailURL, phoneURL, fullContactKey);
         firebase.init(userInfoURL, trepsInfoURL, initUserData);

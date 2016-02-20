@@ -53,7 +53,7 @@ var buttons = {
         $('#getTrep').click( function () {
             console.log('#getTrep');
             // Let user know what is going on.
-            popup.fire({'message':'<p>&nbsp;<p>Getting your Treps.','color':'green'});            
+            popup.fire({'message':'<p>&nbsp;<p>Getting your Treps.','color':'green','minShowTime':2000});
             firebase.getList(firebase.myTrepsRef, 'name', function (data) {
                 popup.extingish({'message':'<p>&nbsp;<p>Got it.','color':'black'}, 2000);
                 //console.log(JSON.stringify(data, null, 4));

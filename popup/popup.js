@@ -2,11 +2,13 @@
     Date: 2016-02-19
 */
 var popup = {
-    visible : 0,    // This indicate the pop is not visible.
-    timeout : 7000,
-    id      : 'popup',
-    button  : 'toggle',
-    once    : 1,
+    visible     : 0,    // This indicate the pop is not visible.
+    timeout     : 7000,
+    id          : 'popup',
+    button      : 'toggle',
+    once        : 1,
+    minShowTime : 0,
+    queued      : null,
     init : function (parms) {
         //console.log("popup.init:",JSON.stringify(parms));
         if (parms) {
@@ -14,12 +16,14 @@ var popup = {
             popup.id      = (parms.id)      ? parms.id      : 'popup';
             popup.button  = (parms.button)  ? parms.button  : 'toggle';
         }
-        document.getElementById(popup.button).addEventListener('click', function() {
-            popup.toggle();
-        });
+        if (popup.button) {
+            document.getElementById(popup.button).addEventListener('click', function() {
+                popup.toggle();
+            });
+        }
     },
     toggle : function () {
-        console.log('popup.toggle:', popup.visible);
+        //console.log('popup.toggle:', popup.visible);
         if (popup.visible === 0) {
             document.getElementById(popup.id).style.opacity = 1;
             document.getElementById(popup.id).style.visibility = 'visible';
@@ -37,6 +41,8 @@ var popup = {
             popup.visible = 0;
             popup.once    = 0;
         }
+        // if 'timeout' is set to zero, this never fires
+        // This allows a single message that fades after timeout, like toast().
         if (popup.timeout > 0) {
             if (popup.once > 0) {
                 setTimeout(popup.toggle, popup.timeout);
@@ -50,17 +56,45 @@ var popup = {
         if ('backgroundColor' in obj) {
             document.getElementById(popup.id).style.backgroundColor = obj.backgroundColor;
         }
+        if ('minShowTime' in obj) {
+            console.log('minShowTime:', obj.minShowTime);
+            popup.minShowTime = obj.minShowTime;
+            setTimeout(function() {
+                popup.minShowTime = 0;
+                if (typeof popup.queued == 'function') {
+                    console.log('popup.queued() fired');
+                    popup.queued();
+                }
+            }, popup.minShowTime);
+        }
         document.getElementById(popup.id).innerHTML = obj.message;
     },
     fire : function (obj) {
-        popup.message(obj);
+        console.log('fire:', JSON.stringify(obj));
+        // Set the message
+        if (obj) {
+            popup.message(obj);
+        }
         popup.toggle();        
     },
     extingish : function (obj, timeout) {
-        popup.message(obj);
-        setTimeout(function () {
-            popup.toggle();
-        }, timeout);
+        console.log('extingish:', JSON.stringify(obj), timeout);
+        var messageAndFadeOut = function () {
+            // change the message, if we have a new one.
+            if (obj) { popup.message(obj); }
+            // remove from screen, after timeout
+            if (timeout) {
+                setTimeout(function () { popup.toggle(); }, timeout);
+            } else {
+                 popup.toggle();
+            }
+        }
+        if ( popup.minShowTime == 0 ) {
+            console.log('messageAndFadeOut() fired');
+            messageAndFadeOut();
+        } else {
+            popup.queued = messageAndFadeOut;
+        }
     }
 };
 
